@@ -1,0 +1,188 @@
+#include <stdio.h>
+#include <stdlib.h>
+//Global Variables-----------------------------------------------------------------------------------------------------
+//create object rational number
+struct Rational{
+    int numerator;
+    int denominator;
+};
+//create global variables
+struct Rational number1;
+struct Rational number2;
+struct Rational resultNumber;
+//Global Variables-----------------------------------------------------------------------------------------------------
+//Investigate Prime Number---------------------------------------------------------------------------------------------
+//investigate if a number can be divided by another or not
+int indivisible(float number, float divisor){
+    if(number<0){
+        number*=-1;
+    }
+    float divisionResult=number/divisor;
+    if((divisionResult-((int)(divisionResult)))>0){
+        return 1;
+    }
+    return 0;
+}
+//investigate is a number prime or not using recursion
+int isPrime(int number, int divisor){
+    if((divisor==1)||(number==1)){
+        return 1;
+    }
+    else{
+        return indivisible(number, divisor)&&isPrime(number, divisor-1);
+    }
+}
+//get next prime number
+int nextPrime(int number){
+    number+=1;
+    while(isPrime(number, number-1)==0){
+        number+=1;
+    }
+    return number;
+}
+//Investigate Prime Number---------------------------------------------------------------------------------------------
+//mathematical operations----------------------------------------------------------------------------------------------
+void addRationals(){
+    resultNumber.denominator=number1.denominator*number2.denominator;
+    resultNumber.numerator=(number1.numerator*number2.denominator)+(number2.numerator*number1.denominator);
+}
+void subtractRationals(){
+    resultNumber.denominator=number1.denominator*number2.denominator;
+    resultNumber.numerator=(number1.numerator*number2.denominator)-(number2.numerator*number1.denominator);
+}
+void multiplyRationals(){
+    resultNumber.numerator=number1.numerator*number2.numerator;
+    resultNumber.denominator=number1.denominator*number2.denominator;
+}
+void dividRationals(){
+    resultNumber.numerator=number1.numerator*number2.denominator;
+    resultNumber.denominator=number1.denominator*number2.numerator;
+}
+//mathematical operations----------------------------------------------------------------------------------------------
+//Shorten Result Number------------------------------------------------------------------------------------------------
+void shortenResultNumber(){
+    int numeratorFactors[100];
+    int denominatorFactors[100];
+    int intersectionFactors[100];
+    //nullify all arrays
+    nullifyArray(numeratorFactors);
+    nullifyArray(denominatorFactors);
+    nullifyArray(intersectionFactors);
+    //get numerator and denominator factors
+    getFactors(resultNumber.numerator, numeratorFactors);
+    getFactors(resultNumber.denominator, denominatorFactors);
+    //get intersection factors
+    getIntersectionFactors(numeratorFactors, denominatorFactors, intersectionFactors);
+    //remove intersection factors
+    removeIntersectionFactors(numeratorFactors, intersectionFactors);
+    removeIntersectionFactors(denominatorFactors, intersectionFactors);
+    //recreate numerator and denominator
+    resultNumber.numerator=recreateNumberFromFactors(numeratorFactors);
+    if(resultNumber.numerator==0){
+        resultNumber.denominator=1;
+    }else{
+        resultNumber.denominator=recreateNumberFromFactors(denominatorFactors);
+    }
+}
+//get Number factors
+void getFactors(int number, int arrayToModify[100]){
+    if(isPrime(number, number-1)==1){
+        arrayToModify[0]=number;
+    }
+    else if(number==0){
+        arrayToModify[0]=0;
+    }else{
+        if(number<0){
+            arrayToModify[0]=-1;
+        }else{
+            arrayToModify[0]=1;
+        }
+        int divisor=2;
+        int arrayLocation=1;
+        while(divisor<=number){
+            if(indivisible(number, divisor)==0){
+                arrayToModify[arrayLocation]=divisor;
+                arrayLocation+=1;
+                number=number/divisor;
+            }else{
+            divisor=nextPrime(divisor);
+            }
+        }
+    }
+}
+//get intersection of two numbers' factors
+void getIntersectionFactors(int array1[100], int array2[100], int resultArray[100]){
+    int resultArrayPointer=0;
+    int loop1;
+    for(loop1=2; loop1<=100; loop1+=1){
+        if(array1[loop1-1]==-1){break;}
+        int loop2;
+        for(loop2=2; loop2<=100; loop2+=1){
+            if(array2[loop2-1]==-1){break;}
+            if(array1[loop1-1]==array2[loop2-1]){
+                resultArray[resultArrayPointer]=array1[loop1-1];
+                resultArrayPointer+=1;
+            }
+            if(array2[loop2-1]>array1[loop1]){
+                break;
+            }
+        }
+    }
+}
+//remove intersection factors from number
+void removeIntersectionFactors(int factorsToModify[100], int factorsToRemove[100]){
+    int loop;
+    for(loop=1; loop<=100; loop+=1){
+        if(factorsToRemove[loop-1]==-1){break;}
+        int loop2;
+        for(loop2=2; loop2<=100; loop2+=1){
+            if(factorsToModify[loop2-1]==factorsToRemove[loop-1]){
+                factorsToModify[loop2-1]=-1;
+                break;
+            }
+        }
+    }
+}
+//recreate number from its factors
+int recreateNumberFromFactors(int factorsArray[100]){
+    if(factorsArray[0]==0){
+        return 0;
+    }
+    int result=factorsArray[0];
+    int loop;
+    for(loop=2; loop<=100; loop+=1){
+        if(factorsArray[loop-1]==-1){continue;}
+        result=result*factorsArray[loop-1];
+    }
+    return result;
+}
+//nullify the entire array
+void nullifyArray(int arrayToModify[100]){
+    int loop;
+    for(loop=1; loop<=100; loop+=1){
+        arrayToModify[loop-1]=-1;
+    }
+}
+//Shorten Result Number------------------------------------------------------------------------------------------------
+//main function
+void main(){
+    obtainNumbersFromUser();
+    subtractRationals();
+    shortenResultNumber();
+    printf("\nResult Number is : %d/%d", resultNumber.numerator, resultNumber.denominator);
+}
+
+void printFactors(int factorsToDisplay[100]){
+    printf("\n");
+    int loop;
+    for(loop=1; loop<=100; loop+=1){
+        printf("%d, ", factorsToDisplay[loop-1]);
+    }
+}
+//obtain two rational numbers from user
+void obtainNumbersFromUser(){
+    printf("\nEnter Number1 : ");
+    scanf("%d/%d", &number1.numerator, &number1.denominator);
+    printf("\nEnter Number2 : ");
+    scanf("%d/%d", &number2.numerator, &number2.denominator);
+}

@@ -1,0 +1,4 @@
+1)Upper and Lower Case
+char character='A';
+character = tolower(character);
+character = toupper(character);

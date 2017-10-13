@@ -1,0 +1,114 @@
+1)Selection Sort Algorithm
+void selectionSortAlgorithm(int arrayToSort[100]){
+    int pointer1;
+    for(pointer1=1; pointer1<100; pointer1+=1){
+        int pointer2;
+        for(pointer2=pointer1+1; pointer2<=100; pointer2+=1){
+            if(arrayToSort[pointer2]<arrayToSort[pointer1]){
+                int tmpNumber=arrayToSort[pointer1];
+                arrayToSort[pointer1]=arrayToSort[pointer2];
+                arrayToSort[pointer2]=tmpNumber;
+            }
+        }
+    }
+
+}
+-----------------------------------------------------------------------
+2)Insertion Sort Algorithm
+//function to swap two numbers in an array
+void swapNumbers(int arrayToSort[100], int pointer1, int pointer2){
+        int tmpNumber=arrayToSort[pointer1-1];
+        arrayToSort[pointer1-2]=arrayToSort[pointer2-1];
+        arrayToSort[pointer2-1]=tmpNumber;
+}
+//main insertion sort algorithm
+void insertionSortAlgorithm(int arrayToSort[100]){
+    int endPointer;
+    for(endPointer=2; endPointer<=100; endPointer+=1){
+        int endPointer2;
+        for(endPointer2=endPointer; endPointer2>=2; endPointer2-=1){
+            if(arrayToSort[endPointer2-1]<arrayToSort[endPointer2-2]){
+                swapNumbers(arrayToSort, endPointer2-2, endPointer2-1);
+            }
+            else{
+                break;
+            }
+        }
+    }
+}
+-----------------------------------------------------------------------
+3)Bubble Sort
+//function to swap two numbers in an array
+void swapNumbers(int arrayToSort[100], int pointer1, int pointer2){
+        int tmpNumber=arrayToSort[pointer1-1];
+        arrayToSort[pointer1-1]=arrayToSort[pointer2-1];
+        arrayToSort[pointer2-1]=tmpNumber;
+}
+//main insertion sort algorithm
+void bubbleSortingAlgorithm(int arrayToSort[100]){
+    int endPointer;
+    for(endPointer=100; endPointer>=2; endPointer-=1){
+        int loop;
+        for(loop=1; loop<=endPointer-1; loop+=1){
+            if(arrayToSort[loop-1]>arrayToSort[loop]){
+                swapNumbers(arrayToSort, loop, loop+1);
+            }
+        }
+    }
+
+}
+-----------------------------------------------------------------------
+4)Merge Sort
+void mergeTwoHalves(int arrayToModify[100], int startPointer1, int endPointer1, int startPointer2, int endPointer2){
+    int totalLength=endPointer2-startPointer1+1;
+    int tmpArray[totalLength];
+    int start1=startPointer1;
+    int start2=startPointer2;
+    //-------------
+    int loop;
+    for(loop=1; loop<=totalLength; loop+=1){
+        if((start1>endPointer1)||(start2>endPointer2)){
+            break;
+        }
+        if(arrayToModify[start1]>arrayToModify[start2]){
+            tmpArray[loop-1]=arrayToModify[start1-1];
+            start1+=1;
+        }
+        else{
+            tmpArray[loop-1]=arrayToModify[start2-1];
+            start2+=1;
+        }
+    }
+    //-----------------------------------------
+    if(loop<totalLength){
+        if(start1>endPointer1){
+            while(loop<=totalLength){
+                tmpArray[loop-1]=arrayToModify[start2-1];
+                loop+=1;
+                start2+=1;
+            }
+        }
+        if(start2>endPointer2){
+                while(loop<=totalLength){
+                tmpArray[loop-1]=arrayToModify[start1-1];
+                loop+=1;
+                start1+=1;
+            }
+        }
+    }
+    //---------------------------------------
+    int loop2;
+    int arrayPointer=startPointer1;
+    for(loop2=1; loop2<=totalLength; loop2+=1){
+        arrayToModify[arrayPointer-1]=tmpArray[loop2-1];
+        arrayPointer+=1;
+    }
+}
+void mergeSortAlgorithm(int arrayToSort[100], int startPointer, int endPointer){
+    if(startPointer<endPointer){
+        int middle=(endPointer-startPointer)+1;
+        mergeSortAlgorithm(arrayToSort, startPointer, middle);
+        mergeSortAlgorithm(arrayToSort, middle+1, endPointer);
+        mergeTwoHalves(arrayToSort, startPointer, middle, middle+1, endPointer);
+    }
+}

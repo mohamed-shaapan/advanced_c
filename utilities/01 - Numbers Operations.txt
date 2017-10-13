@@ -1,0 +1,373 @@
+1)nth Digit
+    int number;
+    printf("\nEnter Your Number : ");
+    scanf("%d", &number);
+    //convert the number to string
+    char numberAsString[100];
+    itoa(number, numberAsString, 10);
+    //get nth digit
+    printf("\n4th Digit is : %c", numberAsString[3]);
+-------------------------------------------------------------------
+2)Number of Digits
+    int number;
+    printf("\nEnter Your Number : ");
+    scanf("%d", &number);
+    //----------------------
+    int digitCount=0;
+    while(number>0){
+        digitCount+=1;
+        number=number/10;
+    }
+    printf("\nNumber of Digits : %d", digitCount);
+-------------------------------------------------------------------
+3)Concatenate Two Numbers
+    int number1; int number2;
+    printf("\nEnter Number1 : ");
+    scanf("%d", &number1);
+    printf("\nEnter Number2 : ");
+    scanf("%d", &number2);
+    //convert both numbers to string
+    char number1AsString[100]; char number2AsString[100];
+    itoa(number1, number1AsString, 10); itoa(number2, number2AsString, 10);
+    //concatenate the two numbers
+    strcat(number1AsString, number2AsString);
+    //test
+    int resultNumber=atoi(number1AsString);
+    printf("\nResult Number Is : %d", resultNumber+1);
+    if(resultNumber==123456){
+        printf("\nSuccess");
+    }
+-------------------------------------------------------------------
+4)Truncate Number
+    //get number
+    int number;
+    printf("\nEnter Your Number : ");
+    scanf("%d", &number);
+    //truncate number
+    int numberOfDigitsToTruncate=2;
+    int loop;
+    for(loop=1; loop<=numberOfDigitsToTruncate; loop+=1){
+        number=number/10;
+    }
+    //print the result number
+    printf("\nResult Number = %d", number);
+-------------------------------------------------------------------
+5)Flip a Number
+    //get number
+    int number;
+    printf("\nEnter Your Number : ");
+    scanf("%d", &number);
+    //get number of digits/Number length
+    int numberLength=0;
+    int tmpNumber=number;
+    while(tmpNumber>0){
+        numberLength+=1;
+        tmpNumber=tmpNumber/10;
+    }
+    //convert number to string
+    char numberAsString[100];
+    itoa(number, numberAsString, 10);
+    //flip text
+    char resultNumberAsString[100];
+    int loop;
+    int loop2=0;
+    for(loop=numberLength-1; loop>=0; loop-=1){
+        resultNumberAsString[loop2]=numberAsString[loop];
+        loop2+=1;
+    }
+    //convert result result number to int
+    int resultNumber=atoi(resultNumberAsString);
+    printf("\nFlipped Number : %d", resultNumber);
+-------------------------------------------------------------------
+6)Is Palindrome
+//obtain string length
+int obtainStringLength(char stringToTest[100]){
+    char currentCharacter=stringToTest[0];
+    int stringLength=0;
+    int loop=0;
+    while(currentCharacter!='\0'){
+        stringLength+=1;
+        loop+=1;
+        currentCharacter=stringToTest[loop];
+    }
+    return stringLength;
+}
+//recursive Palindrome testing
+int isPalindrome(char StringToTest[100], int startPosition, int endPosition){
+    if(startPosition==endPosition){
+        return 1;
+    }
+    if(endPosition==startPosition+1){
+        return StringToTest[startPosition]==StringToTest[endPosition];
+    }
+    else{
+        //printf("\nTest 1");
+        //printf("\n\nStart Position : %d", startPosition);
+        //printf("\nEnd Position : %d", endPosition);
+        return (StringToTest[startPosition]==StringToTest[endPosition])&&(isPalindrome(StringToTest, startPosition+1, endPosition-1));
+    }
+}
+//Main Function
+void main()
+{
+    //obtain the number
+    int number;
+    printf("\nEnter Your Number : ");
+    scanf("%d",&number);
+    //convert number to string
+    char numberAsString[100];
+    itoa(number, numberAsString, 10);
+    //test for being a palindrome or not
+    int testResult=isPalindrome(numberAsString, 0, obtainStringLength(numberAsString)-1);
+    if(testResult==1){
+        printf("\nYour Name is a Palindrome");
+    }else{
+        printf("\nYour Name Is NOT a Palindrome");
+    }
+}
+-------------------------------------------------------------------
+7)Odd or Even
+void oddOrEven(float number){
+    short test=((number/2)-((int)(number/2)))>0;
+    if(test==1){
+        printf("\nOdd Number");
+    }
+    else{
+        printf("\nEven Number");
+    }
+}
+
+void main()
+{
+    int number;
+    printf("\nEnter Your Number : ");
+    scanf("%d", &number);
+    oddOrEven(number);
+}
+-------------------------------------------------------------------
+8)Download Duration
+void downloadTime(long double fileSize, int internetSpeed){
+    //file size is in MBs, Internet speed is in kbps
+    long double remainderSeconds;
+    long double totalTimeInSeconds=(fileSize*1024*8)/(internetSpeed);
+    int years=totalTimeInSeconds/(365*24*3600);
+    remainderSeconds=((totalTimeInSeconds/(365*24*3600))-years)*(365*24*3600);
+    int months=remainderSeconds/(30*24*3600);
+    remainderSeconds=((remainderSeconds/(30*24*3600))-months)*(30*24*3600);
+    int days=remainderSeconds/(24*3600);
+    remainderSeconds=((remainderSeconds/(24*3600))-days)*(24*3600);
+    int hours=remainderSeconds/3600;
+    remainderSeconds=((remainderSeconds/3600)-hours)*(3600);
+    int minutes=remainderSeconds/60;
+    remainderSeconds=((remainderSeconds/60)-minutes)*60;
+    printf("\nFile Size : %", fileSize);
+    printf("\,, Internet Speed : %d", internetSpeed);
+    printf("\nTime it takes is :");
+    printf("\n%d Years",years);
+    printf("\n%d Months",months);
+    printf("\n%d Days",days);
+    printf("\n%d Hours",hours);
+    printf("\n%d Minutes",minutes);
+    printf("\n%d Seconds",(int)remainderSeconds);
+}
+
+void main(){
+    long double filesize=1024*1024*1024;//in MBs
+    int internetSpeed=512;
+    downloadTime(filesize, internetSpeed);
+
+}
+-------------------------------------------------------------------
+9)Factorial
+int factorial(int number){
+    if(number==0){
+        return 1;
+    }
+    else{
+        return number*factorial(number-1);
+    }
+}
+-------------------------------------------------------------------
+10)Prime Numbers
+//investigate if a number can be divided by another or not
+int indivisible(float number, float divisor){
+    float divisionResult=number/divisor;
+    if((divisionResult-((int)(divisionResult)))>0){
+        return 1;
+    }
+    return 0;
+}
+//investigate is a number prime or not using recursion
+int isPrime(int number, int divisor){
+    if((divisor==1)||(number==1)){
+        return 1;
+    }
+    else{
+        return indivisible(number, divisor)&&isPrime(number, divisor-1);
+    }
+}
+
+//main function
+void main(){
+    while(1==1){
+        //obtain number from user
+        int number;
+        printf("\nEnter Your Number : ");
+        scanf("%d", &number);
+        //investigate number
+        short testResult=isPrime(number, number-1);
+        if(testResult==1){
+            printf("\nYour Number : %d, Is Prime Number", number);
+        }
+        else{
+            printf("\nYour Number : %d, Is NOT Prime Number", number);
+        }
+        printf("\n-----------------------------------------------");
+    }
+}
+-------------------------------------------------------------------
+11)Fibonacci Series
+//recursive fib
+int fib(int term){
+    if((term==1)||(term==2)){
+        return 1;
+    }else{
+        return fib(term-1)+fib(term-2);
+    }
+}
+//print fibonacci series
+void printFibTerms(int numberOfTerms){
+    printf("\nFibonacci Series to %d Term Is : \n", numberOfTerms);
+    int loop;
+    for(loop=1; loop<numberOfTerms; loop+=1){
+        printf("%d, ", fib(loop));
+    }
+    printf("%d", fib(numberOfTerms));
+}
+
+//main function
+void main(){
+    printFibTerms(15);
+}
+-------------------------------------------------------------------
+12)Decimal to Binary (cheat the system)
+    int decimalNumber=125;
+    char binaryNumberAsString[100];
+    itoa(decimalNumber, binaryNumberAsString, 2);
+    //convert number to base 2
+    int binaryNumber=atoi(binaryNumberAsString);
+    printf("\nNumber As Binary = %d", binaryNumber);
+-------------------------------------------------------------------
+13)Decimal to Binary
+int nearestPower(int number){
+    if(number==1){
+        return 1;
+    }
+    if(number==0){
+        return 0;
+    }
+    int result=2;
+    while(result<=number){
+        result*=2;
+    }
+    if(result>number){
+        result=result/2;
+    }
+    return result;
+}
+
+int convertDecimalToBinary(int decimalNumber){
+    char binaryNumberAsString[100];
+    int arrayPointer=0;
+    int divisor=nearestPower(decimalNumber);
+    while(divisor>=1){
+        if((decimalNumber/divisor)>0){
+            binaryNumberAsString[arrayPointer]='1';
+            decimalNumber=decimalNumber-divisor;
+            divisor=divisor/2;
+            arrayPointer+=1;
+        }else{
+            binaryNumberAsString[arrayPointer]='0';
+            divisor=divisor/2;
+            arrayPointer+=1;
+        }
+    }
+    return atoi(binaryNumberAsString);
+}
+void main(){
+
+    int decimalNumber=125;
+    int binaryNumber=convertDecimalToBinary(decimalNumber);
+    printf("\nResult:");
+    printf("\nDecimal : %d", decimalNumber);
+    printf("\nBinary  : %d", binaryNumber);
+
+}
+-------------------------------------------------------------------
+14)Decimal to Any Base
+//Start---------------------------------------------Find the Nearest Power-------------------------------------------
+int nearestPower(int number, int targetBase){
+    if(number==1){
+        return 1;
+    }
+    if(number==0){
+        return 0;
+    }
+    int result=targetBase;
+    while(result<=number){
+        result*=targetBase;
+    }
+    if(result>number){
+        result=result/targetBase;
+    }
+    return result;
+}
+//End-----------------------------------------------Find the Nearest Power-------------------------------------------
+//Start--------------------------------------Concatenate the Partitioned Number--------------------------------------
+void concatenateTheWholeNumber(char completeNumberArray[100], char partitionedNumberArray[100][100]){
+    strcpy(completeNumberArray, partitionedNumberArray[0]);
+    int loop;
+    for(loop=2; loop<=100; loop+=1){
+        if(partitionedNumberArray[loop-1][0]=='\0'){
+            break;
+        }
+        strcat(completeNumberArray, partitionedNumberArray[loop-1]);
+    }
+}
+//End----------------------------------------Concatenate the Partitioned Number--------------------------------------
+//Start---------------------------------------------Convert Decimal to any Base--------------------------------------
+int convertDecimalToAnyBase(int decimalNumber, int base){
+    char baseNumberAsString[100][100];
+    int arrayPointer=0;
+    int divisor=nearestPower(decimalNumber, base);
+    while(divisor>=1){
+        if((decimalNumber/divisor)>=1){
+            int division=decimalNumber/divisor;
+            itoa(division, baseNumberAsString[arrayPointer], 10);
+            decimalNumber=decimalNumber-(divisor*division);
+            divisor=divisor/base;
+            arrayPointer+=1;
+        }else{
+            int division=0;
+            itoa(division, baseNumberAsString[arrayPointer], 10);
+            divisor=divisor/base;
+            arrayPointer+=1;
+        }
+    }
+    char convertedNumberAsString[100];
+    concatenateTheWholeNumber(convertedNumberAsString, baseNumberAsString);
+    return atoi(convertedNumberAsString);
+}
+//End-----------------------------------------------Convert Decimal to any Base--------------------------------------
+void main(){
+
+    int decimalNumber=300;
+    int binaryNumber=convertDecimalToAnyBase(decimalNumber, 10);
+    printf("\nResult:");
+    printf("\nDecimal : %d", decimalNumber);
+    printf("\nBinary  : %d", binaryNumber);
+
+}
+-------------------------------------------------------------------
+
+

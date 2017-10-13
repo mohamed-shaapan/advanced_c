@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void stringOperations(){
+    char string1[100]="Mohamed";
+    char string2[100]="Shaapan";
+    //copy
+    strcpy(string1, string2);
+    //concatenate
+    strcat(string1, string2);
+    //length
+    stringLength(string1);
+    //truncate
+    truncateString(string1, 2);
+    //nth character
+    char nthCharacter=string1[5];
+    //matching
+    short testCondition=strcmp(string1, string2)==0;
+    //lower and upper case
+//    strcpy(string1, strlwr(string1))
+//    strcpy(string1, strupr(string1))
+
+}
+
+int stringLength(char stringToTest[100]){
+    int length=0;
+    int loop;
+    for(loop=1; loop<=100; loop+=1){
+        if(stringToTest[loop-1]=='\0'){
+            break;
+        }
+        length+=1;
+    }
+    return length;
+}
+
+void truncateString(char stringToModify[100], int charactersToRemove){
+    int sLength=stringLength(stringToModify);
+    int reverseLoop;
+    for(reverseLoop=sLength; reverseLoop>(sLength-charactersToRemove); reverseLoop-=1){
+        stringToModify[reverseLoop-1]='\0';
+    }
+}
+
+void main(){
+
+    char test=" ";
+    if(test==" "){
+        printf("\nsuccess");
+    }
+    char phrase[100];
+    printf("\nEnter Your Phrase : ");
+    gets(phrase);
+    printf("\nNumber of Words in this Phrase is : %d", countOfWords(phrase));
+
+
+
+}
+
+int countOfWords(char phraseToTest[100]){
+    int wordsCount=0;
+    int characterPointer;
+    for(characterPointer=1; characterPointer<=100; characterPointer+=1){
+            if(phraseToTest[characterPointer-1]=='\0'){
+                break;
+            }
+            if(phraseToTest[characterPointer-1]==" "){
+                continue;
+            }else{
+            if(phraseToTest[characterPointer-1]!=' '){
+                while((phraseToTest[characterPointer-1]!=' ')&&(phraseToTest[characterPointer-1]!='\0')){
+                    characterPointer+=1;
+            }
+
+                if((phraseToTest[characterPointer-1]==' ')||(phraseToTest[characterPointer-1]=='\0')){
+                    wordsCount+=1;
+                    //debugging
+                    //if(phraseToTest[characterPointer-1]==' '){
+                    //    printf("\nStopping because of SPACE");
+                    //}else{
+                    //    printf("\nStopping Because of Null Terminator");
+                    //}
+                    //printf("\nWords Count : %d", wordsCount);
+                }
+            }
+    }
+    return wordsCount;
+}

@@ -1,0 +1,22 @@
+1)Towers of Hanoi:
+//print function
+void moveStack(int numberOfRings, char fromPost, char toPost){
+    printf("\nMove : %d, From: %c, To: %c", numberOfRings, fromPost, toPost);
+}
+//main game engine
+void towersOfHanoi(int numberOfRings, char fromPost, char toPost, char sparePost){
+    if(numberOfRings==1){
+        moveStack(numberOfRings, fromPost, toPost);
+    }else{
+        towersOfHanoi(numberOfRings-1, fromPost, sparePost, toPost);
+        moveStack(numberOfRings, fromPost, toPost);
+        towersOfHanoi(numberOfRings-1, sparePost, toPost, fromPost);
+    }
+}
+//main function
+void main(){
+
+    towersOfHanoi('A', 'B', 'C', 1);
+}
+--------------------------------------------------------------------
+2)

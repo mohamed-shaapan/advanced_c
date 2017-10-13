@@ -1,0 +1,30 @@
+1. Convert Integer to String
+    int number1=1776;
+    char numberAsString[100];
+    itoa(number1, numberAsString, 10);
+    //where 10 is the conversion base (2 binary - 10 decimal - 8 octal...)
+-----------------------------------------------------------------------------
+2. Convert String to Integer
+    int number2=atoi(numberAsString);
+-----------------------------------------------------------------------------
+3. String Functions
+    strcat(string1, string2);
+    //concatenates the two strings and stores the result in string1
+-----------------------------------------------------------------------------
+4.String Lenght
+    //01-get the name
+    char name[100];
+    printf("\nEnter Your Name : ");
+    gets(name);
+    //02-get name length
+    char currentCharacter=name[0];
+    int stringLength=0;
+    int loop=0;
+    while(currentCharacter!='\0'){
+        stringLength+=1;
+        loop+=1;
+        currentCharacter=name[loop];
+    }
+    //03-print result
+    printf("\nString Length : %d", stringLength);
+-----------------------------------------------------------------------------
